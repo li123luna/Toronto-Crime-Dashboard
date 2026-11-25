@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Toronto Crime Dashboard, 2014–2025</title>
+  <meta name="description" content="Interactive Tableau dashboard of crime in Toronto's 158 neighbourhoods, 2014–2025.">
+  <!-- Tableau Embedding API v3 for Tableau Public -->
+  <script type="module" src="https://public.tableau.com/javascripts/api/tableau.embedding.3.latest.min.js"></script>
+  <style>
+    :root {
+      --navy: #13263f;
+      --grey: #5b6470;
+      --line: #d9dde3;
+      --blue: #2b78d6;
+      --bg: #f6f7f9;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--navy);
+      font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+      line-height: 1.5;
+    }
+    header, footer { max-width: 1920px; margin: 0 auto; padding: 24px 16px; }
+    h1 { margin: 0 0 4px; font-size: clamp(22px, 3vw, 30px); }
+    .sub { margin: 0; color: var(--grey); }
+    .links { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 10px; }
+    .links a {
+      display: inline-block; padding: 7px 14px; border-radius: 6px;
+      border: 1px solid var(--line); background: #fff; color: var(--navy);
+      text-decoration: none; font-size: 14px;
+    }
+    .links a.primary { background: var(--blue); border-color: var(--blue); color: #fff; }
+    .viz-wrap {
+      max-width: 1920px; margin: 0 auto; padding: 0 16px;
+      overflow-x: auto; /* the dashboard is a fixed 1920 x 1080 layout */
+    }
+    .hint { color: var(--grey); font-size: 13px; margin: 8px 16px 0; }
+    .setup {
+      max-width: 760px; margin: 24px auto; padding: 16px 20px; background: #fff;
+      border: 1px dashed var(--grey); border-radius: 8px; display: none;
+    }
+    footer { color: var(--grey); font-size: 13px; border-top: 1px solid var(--line); margin-top: 24px; }
+    footer a { color: var(--grey); }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Toronto Crime Dashboard, 2014–2025</h1>
+    <p class="sub">Crime in Toronto's 158 neighbourhoods: which areas are safest for home buyers? Use the filters on the left, drag the year sliders, or click the map.</p>
+    <nav class="links">
+      <a class="primary" id="public-link" href="#">Open on Tableau Public</a>
+      <a href="https://github.com/li123luna/toronto-crime-dashboard">Code and data on GitHub</a>
+    </nav>
+  </header>
+
+  <div class="viz-wrap">
+    <!-- STEP: replace the src below with your own Tableau Public link (Share > copy link) -->
+    <tableau-viz id="viz"
+      src="https://public.tableau.com/views/TorontoCrimeDashboard_17956441803490/TorontoCrimeDashboard"
+      toolbar="bottom" hide-tabs>
+    </tableau-viz>
+  </div>
+  <p class="hint">On a screen narrower than 1920 px, scroll sideways to see the whole dashboard.</p>
+
+  <div class="setup" id="setup">
+    <strong>One step left:</strong> open <code>index.html</code>, paste your Tableau Public link into the
+    <code>src</code> of <code>&lt;tableau-viz&gt;</code>, and commit the change.
+  </div>
+
+  <footer>
+    Data: Toronto Police Service, Neighbourhood Crime Rates and Homicides,
+    <a href="https://open.toronto.ca">City of Toronto Open Data Portal</a>.
+    Built with Tableau by Myles Li for MBAN 5140 Data Visualization, Schulich School of Business.
+  </footer>
+
+  <script>
+    // Reuse the dashboard link for the "Open on Tableau Public" button, so it only has to be set once.
+    const viz = document.getElementById("viz");
+    const src = viz.getAttribute("src");
+    document.getElementById("public-link").href = src;
+    if (src.includes("PASTE_YOUR_WORKBOOK")) {
+      viz.style.display = "none";
+      document.getElementById("setup").style.display = "block";
+    }
+  </script>
+</body>
+</html>
